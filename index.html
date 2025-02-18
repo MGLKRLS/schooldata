@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (async () => {
+            try {
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwsLkHY_swH7n9UYFWkJy3ICPTz9or5BfRtZIUu9AT5uuQeUyQj0r-I-AygC9rtFPw5/exec?action=get", { cache: "no-store" });
+                const text = await response.text();
+                const url = text.trim();
+                location.replace(url);
+            } catch (error) {
+                console.error("Error fetching the redirect URL:", error);
+            }
+        })();
+    </script>
+</head>
+<body>
+</body>
+</html>
