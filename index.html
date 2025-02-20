@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
+    <title>RLS</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,7 +93,7 @@
 
                 // Get URL parameters (optional path)
                 const params = new URLSearchParams(window.location.search);
-                const path = params.get("url") || "";
+                const path = params.get("url") ||params.get("year")|| "";
 
                 // Perform instant redirect
                 window.location.replace(`${baseUrl}${path}`);
