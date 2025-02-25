@@ -71,7 +71,7 @@
     <div id="status-message" class="sub-message">Redirecting you to the school data server...</div>
     <div id="error-message" class="error-message">There was an error fetching the URL. Please try again later.</div>
 
-    <script>
+    <script> 
         (async () => {
             try {
                 const now = new Date();
@@ -101,9 +101,25 @@
                 let baseUrl = await response.text();
                 baseUrl = baseUrl.trim();
 
-                // Perform instant redirect
-                window.location.replace(`${baseUrl}${path}`);
+                // Ensure baseUrl is valid
+                if (!baseUrl) {
+                    throw new Error("Base URL is empty or invalid.");
+                }
 
+                // **NEW: Redirect using an iframe to apply the header**
+                const targetUrl = `${baseUrl}${path}`;
+                const iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                iframe.src = targetUrl;
+
+                // Append iframe to document so it loads the page with the required header
+                document.body.appendChild(iframe);
+
+                // Redirect manually after a small delay
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 100);
+                
                 // Update footer year dynamically
                 document.getElementById("year").textContent = year;
             } catch (error) {
@@ -112,7 +128,8 @@
                 document.getElementById("error-message").style.display = 'block';
             }
         })();
-    </script>
+</script>
+
 
     <div class="footer">
         &copy; <span id="year"></span> El Rashid Language School | Powered by 
