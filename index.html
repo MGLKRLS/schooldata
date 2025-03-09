@@ -66,73 +66,73 @@
 </head>
 <body>
 
-    <img src="rls_logo_ramadan.jpg" alt="El Rashid Language School Logo" class="logo">
-    <div class="message">Welcome to El Rashid Language School</div>
+    <img src="rls_logo_ramadan.jpg" alt="El Rashid Language Schools Logo" class="logo">
+    <div class="message">Welcome to El Rashid Language Schools</div>
     <div id="status-message" class="sub-message">Redirecting you to the school data server...</div>
     <div id="error-message" class="error-message">There was an error fetching the URL. Please try again later.</div>
 
     <script> 
+        // Update footer year dynamically at the start
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("year").textContent = new Date().getFullYear();
+        });
+    
         (async () => {
             try {
                 const now = new Date();
                 const hours = now.getHours();
                 const day = now.getDay(); // 0 = Sunday, 6 = Saturday
-
+    
                 // Get URL parameters
                 const params = new URLSearchParams(window.location.search);
                 const path = params.get("url") || "";
-                const yearParam = params.get("year");
-                const year = yearParam ? parseInt(yearParam) : now.getFullYear(); // Default to current year if missing
-
+    
                 // Check if today is a school day (Sunday - Thursday)
                 if (day === 5 || day === 6) { // Friday (5) & Saturday (6)
                     document.getElementById("status-message").innerText = "Please visit during active school hours (Sunday - Thursday, 8 AM - 1 PM).";
                     return;
                 }
-
+    
                 // Check if the current time is within school hours (8 AM - 2 PM)
                 if (hours < 8 || hours >= 13) {
                     document.getElementById("status-message").innerText = "Please visit during active school hours (Sunday - Thursday, 8 AM - 2 PM).";
                     return;
                 }
-
+    
                 // Fetch the base URL
                 const response = await fetch("https://script.google.com/macros/s/AKfycbwsLkHY_swH7n9UYFWkJy3ICPTz9or5BfRtZIUu9AT5uuQeUyQj0r-I-AygC9rtFPw5/exec?action=get", { cache: "no-store" });
                 let baseUrl = await response.text();
                 baseUrl = baseUrl.trim();
-
+    
                 // Ensure baseUrl is valid
                 if (!baseUrl) {
                     throw new Error("Base URL is empty or invalid.");
                 }
-
-                // **NEW: Redirect using an iframe to apply the header**
+    
+                // **Redirect using an iframe to apply the header**
                 const targetUrl = `${baseUrl}${path}`;
                 const iframe = document.createElement("iframe");
                 iframe.style.display = "none";
                 iframe.src = targetUrl;
-
+    
                 // Append iframe to document so it loads the page with the required header
                 document.body.appendChild(iframe);
-
+    
                 // Redirect manually after a small delay
                 setTimeout(() => {
                     window.location.href = targetUrl;
                 }, 100);
-                
-                // Update footer year dynamically
-                document.getElementById("year").textContent = year;
             } catch (error) {
                 console.error("Error fetching the redirect URL:", error);
                 document.getElementById("status-message").style.display = 'none';
                 document.getElementById("error-message").style.display = 'block';
             }
         })();
-</script>
-
+    </script>
+    
 
     <div class="footer">
-        &copy; <span id="year"></span> El Rashid Language School | Powered by 
+        &copy; <span id="year"></span> El Rashid Language Schools | Powered by 
         <a href="mailto:mahmoudigomaa001@gmail.com">MG</a>
     </div>
 
