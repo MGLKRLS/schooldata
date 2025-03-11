@@ -94,8 +94,8 @@
                 }
     
                 // Check if the current time is within school hours (8 AM - 2 PM)
-                if (hours < 8 || hours >= 13) {
-                    document.getElementById("status-message").innerText = "Please visit during active school hours (Sunday - Thursday, 8 AM - 2 PM).";
+                if (hours < 7 || hours >= 14) {
+                    document.getElementById("status-message").innerText = "Please visit during active school hours (Sunday - Thursday, 8 AM - 1 PM).";
                     return;
                 }
     
