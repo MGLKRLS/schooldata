@@ -1,16 +1,17 @@
-/* Modern Dashboard CSS for Elrashid School */
+/* Modern Premium Dashboard CSS for Elrashid School */
 :root {
-    --primary: #2563eb; /* Blue for primary elements */
-    --secondary: #4b5563; /* Gray for secondary elements */
-    --sidebar-bg: #1f2937; /* Dark gray for sidebar */
-    --submenu-bg: #2d3748; /* Slightly lighter for submenus */
-    --text-light: #ffffff; /* White for text on dark backgrounds */
+    --primary: #4f46e5; /* Indigo for primary elements */
+    --secondary: #6b7280; /* Cool gray for secondary elements */
+    --accent: #14b8a6; /* Teal for buttons and highlights */
+    --sidebar-bg: #111827; /* Dark navy for sidebar */
+    --submenu-bg: #1f2937; /* Slightly lighter for submenus */
+    --text-light: #f9fafb; /* Off-white for text on dark backgrounds */
     --text-dark: #1f2937; /* Dark gray for text on light backgrounds */
-    --hover-bg: #374151; /* Hover background for sidebar */
-    --background: #f8fafc; /* Light gray for page background */
-    --accent: #10b981; /* Green for accents (e.g., buttons) */
+    --background: #f3f4f6; /* Light gray for page background */
+    --card-bg: #ffffff; /* White for cards */
     --error: #ef4444; /* Red for errors */
     --border: #e5e7eb; /* Light gray for borders */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Reset and Base Styles */
@@ -18,7 +19,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
 }
 
 body {
@@ -26,14 +27,14 @@ body {
     background: var(--background);
     color: var(--text-dark);
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
     min-height: 100vh;
     display: flex;
 }
 
 /* Sidebar (replacing #cssmenu) */
 #dashboard-sidebar {
-    width: 280px;
+    width: 300px;
     background: var(--sidebar-bg);
     color: var(--text-light);
     height: 100vh;
@@ -42,7 +43,8 @@ body {
     right: 0;
     overflow-y: auto;
     transition: width 0.3s ease, transform 0.3s ease;
-    z-index: 999;
+    box-shadow: var(--shadow);
+    z-index: 1000;
 }
 
 #dashboard-sidebar.collapsed {
@@ -55,29 +57,41 @@ body {
 
 #sidebar-header {
     background: var(--primary);
-    padding: 16px;
-    font-size: 18px;
-    font-weight: 600;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 700;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     position: sticky;
     top: 0;
+    z-index: 1;
+}
+
+#sidebar-header span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #sidebar-search {
-    padding: 12px;
+    padding: 16px;
 }
 
 #sidebar-search input {
     width: 100%;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 10px;
     border: none;
-    outline: none;
-    font-size: 14px;
     background: var(--submenu-bg);
     color: var(--text-light);
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+#sidebar-search input:focus {
+    outline: none;
+    background: #374151;
 }
 
 #sidebar-menu {
@@ -85,27 +99,38 @@ body {
 }
 
 #sidebar-menu li {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 #sidebar-menu li a {
     display: flex;
     align-items: center;
-    padding: 12px 18px;
+    padding: 14px 20px;
     color: var(--text-light);
     text-decoration: none;
-    font-size: 14px;
-    transition: background 0.2s ease;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.2s ease, padding-right 0.2s ease;
 }
 
 #sidebar-menu li a i {
-    margin-left: 10px;
-    width: 20px;
+    margin-left: 12px;
+    width: 24px;
     text-align: center;
+    font-size: 18px;
+}
+
+#dashboard-sidebar.collapsed #sidebar-menu li a span {
+    display: none;
+}
+
+#dashboard-sidebar.collapsed #sidebar-menu li a {
+    justify-content: center;
+    padding: 14px;
 }
 
 #sidebar-menu li a:hover {
-    background: var(--hover-bg);
+    background: var(--submenu-bg);
 }
 
 .submenu {
@@ -114,8 +139,9 @@ body {
 }
 
 .submenu li a {
-    padding-right: 40px;
-    font-size: 13px;
+    padding-right: 48px;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .open > .submenu {
@@ -124,15 +150,15 @@ body {
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-5px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 /* Main Content */
 #dashboard-content {
-    margin-right: 280px;
-    padding: 24px;
-    width: calc(100% - 280px);
+    margin-right: 300px;
+    padding: 32px;
+    width: calc(100% - 300px);
     transition: margin-right 0.3s ease, width 0.3s ease;
 }
 
@@ -155,46 +181,67 @@ body {
     color: var(--text-light);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+#sidebar-toggle-btn:hover {
+    transform: scale(1.1);
 }
 
 /* Header */
 #header {
-    background: var(--primary);
-    color: var(--text-light);
-    padding: 16px;
+    background: var(--card-bg);
+    color: var(--text-dark);
+    padding: 16px 24px;
     position: fixed;
     top: 0;
     right: 0;
     width: 100%;
     z-index: 998;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
 }
 
 /* Form Elements */
 input, select, textarea, button {
     font-family: inherit;
     font-size: 16px;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-    color: var [--text-dark);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-dark);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
 }
 
 input[type="submit"], button {
@@ -202,34 +249,40 @@ input[type="submit"], button {
     color: var(--text-light);
     cursor: pointer;
     font-weight: 600;
-    padding: 10px 20px;
+    padding: 12px 24px;
+    border: none;
 }
 
 input[type="submit"]:hover, button:hover {
-    background: #059669;
+    background: #0d9488;
+    transform: translateY(-2px);
 }
 
 input[type="checkbox"] {
     width: 20px;
     height: 20px;
+    accent-color: var(--primary);
 }
 
 .star {
     color: var(--error);
+    font-size: 18px;
 }
 
 /* Tables */
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 24px 0;
+    background: var(--card-bg);
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
 th, td {
-    padding: 12px 16px;
+    padding: 16px;
     text-align: right;
     font-weight: 500;
 }
@@ -238,51 +291,63 @@ th {
     background: var(--secondary);
     color: var(--text-light);
     font-weight: 600;
+    font-size: 15px;
 }
 
-tr:nth-child(even) {
-    background: #f1f5f9;
+td {
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 tr:hover {
-    background: #e2e8f0;
+    background: #f1f5f9;
 }
 
 /* Buttons */
 .button, .btn {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--accent);
     color: var(--text-light);
     text-decoration: none;
     font-weight: 600;
+    box-shadow: var(--shadow);
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .button:hover, .btn:hover {
-    background: #059669;
+    background: #0d9488;
     transform: translateY(-2px);
 }
 
 /* Loader */
-.loader span {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 4px;
-    background: var(--primary);
-    border-radius: 50%;
-    animation: loader 0.9s infinite alternate;
+.loader {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
-.loader span:nth-child(2) { animation-delay: 0.3s; }
-.loader span:nth-child(3) { animation-delay: 0.6s; }
+.loader span {
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: loader 0.8s infinite alternate;
+}
+
+.loader span:nth-child(2) { animation-delay: 0.2s; }
+.loader span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes loader {
-    0% { transform: scale(1); opacity: 0.9; }
-    100% { transform: scale(1.5); opacity: 0.3; }
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0.4; }
 }
 
 /* jQuery UI Overrides */
@@ -292,13 +357,14 @@ tr:hover {
 }
 
 .ui-widget-content {
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
 }
 
 .ui-state-default {
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--border);
     color: var(--text-dark);
 }
@@ -314,15 +380,33 @@ tr:hover {
 }
 
 .ui-corner-all {
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .ui-datepicker, .ui-dialog, .ui-autocomplete {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
     border: none;
+    background: var(--card-bg);
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    #dashboard-sidebar {
+        width: 250px;
+    }
+    #dashboard-sidebar.collapsed {
+        width: 70px;
+    }
+    #dashboard-content {
+        margin-right: 250px;
+        width: calc(100% - 250px);
+    }
+    #dashboard-sidebar.collapsed ~ #dashboard-content {
+        margin-right: 70px;
+        width: calc(100% - 70px);
+    }
+}
+
 @media (max-width: 768px) {
     #dashboard-sidebar {
         transform: translateX(100%);
@@ -333,21 +417,27 @@ tr:hover {
     #dashboard-content {
         margin-right: 0;
         width: 100%;
+        padding: 16px;
     }
     #sidebar-toggle-btn {
-        right: 20px;
+        right: 16px;
+        top: 16px;
     }
-    table, th, td {
-        font-size: 14px;
+    th, td {
+        font-size: 13px;
+        padding: 12px;
     }
 }
 
 @media (max-width: 480px) {
     input, select, button {
         font-size: 14px;
-        padding: 8px;
+        padding: 10px;
     }
     .button, .btn {
         padding: 10px 16px;
+    }
+    table {
+        font-size: 12px;
     }
 }
